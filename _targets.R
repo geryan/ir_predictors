@@ -58,6 +58,11 @@ list(
   ),
   tar_terra_rast(
     crop_2010,
-    match_ref(crop_2010_raw, ref)
+    match_ref(
+      x = crop_2010_raw,
+      ref = ref,
+      missing_val = 0,
+      filename = "output/spatial/crop_2010.tif"
+    )
   )
 )
