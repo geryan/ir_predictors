@@ -25,6 +25,31 @@ Originally from [https://harvestchoice.org/data/]() now housed at
 
 #### Global Spatially-Disaggregated Crop Production Statistics
 
+Using the `_P_` (production) variables for `_A` (total area) technology layers
+(NB: consider using irrigated + high inputs as tighter proxy for pestecide use?)
+```
+v: Variables
+**************
+*_A_*		physical area
+*_H_*		harvested area
+*_P_*		production
+*_Y_*		yield
+*_V_agg_*	value of production, aggregated to all crops, food and non-food (see below)
+
+t: Technologies
+******************
+*_TA	all technologies together, ie complete crop
+*_TI	irrigated portion of crop
+*_TH	rainfed high inputs portion of crop
+*_TL	rainfed low inputs portion of crop
+*_TS	rainfed subsistence portion of crop
+*_TR	rainfed portion of crop (= TA - TI, or TH + TL + TS)
+```
+
+
+
+
+
 ##### 2000
 International Food Policy Research Institute, 2019, "Global Spatially-
 Disaggregated Crop Production Statistics Data for 2000 Version 3.0.7", 

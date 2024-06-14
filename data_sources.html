@@ -98,6 +98,23 @@ malariaAtlas::getRaster()</code></pre>
 <p>Originally from <a href="">https://harvestchoice.org/data/</a> now housed at <a href="">https://www.ifpri.org/project/harvestchoice</a> with data at:</p>
 <section id="global-spatially-disaggregated-crop-production-statistics" class="level4">
 <h4 class="anchored" data-anchor-id="global-spatially-disaggregated-crop-production-statistics">Global Spatially-Disaggregated Crop Production Statistics</h4>
+<p>Using the <code>_P_</code> (production) variables for <code>_A</code> (total area) technology layers (NB: consider using irrigated + high inputs as tighter proxy for pestecide use?)</p>
+<pre><code>v: Variables
+**************
+*_A_*       physical area
+*_H_*       harvested area
+*_P_*       production
+*_Y_*       yield
+*_V_agg_*   value of production, aggregated to all crops, food and non-food (see below)
+
+t: Technologies
+******************
+*_TA    all technologies together, ie complete crop
+*_TI    irrigated portion of crop
+*_TH    rainfed high inputs portion of crop
+*_TL    rainfed low inputs portion of crop
+*_TS    rainfed subsistence portion of crop
+*_TR    rainfed portion of crop (= TA - TI, or TH + TL + TS)</code></pre>
 <section id="section" class="level5">
 <h5 class="anchored" data-anchor-id="section">2000</h5>
 <p>International Food Policy Research Institute, 2019, “Global Spatially- Disaggregated Crop Production Statistics Data for 2000 Version 3.0.7”, <a href="">https://doi.org/10.7910/DVN/A50I2T</a>, Harvard Dataverse, V2 <span class="citation" data-cites="crop_disagg_2000">(<a href="#ref-crop_disagg_2000" role="doc-biblioref">Institute 2019</a>)</span></p>
