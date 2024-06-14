@@ -20,8 +20,8 @@ tar_option_set(
     "irpreds",
     "geotargets",
     "tidyterra"
-  )#,
-   #format = "qs",
+  ),
+   format = "qs",
 )
 
 tar_source()
@@ -29,29 +29,35 @@ tar_source()
 list(
   #### Static time-non-varying stuff
   tar_terra_rast(
-    itn2020,
-    get_itn_2020("output/spatial/itn2020.tif")
+    itn_2018,
+    rast("data/spatial/ITN_2018_use_mean.tif")
+  ),
+  tar_terra_rast(
+    ref,
+    create_reference(itn_2018, "output/spatial/reference.tif")
+  ),
+  tar_target(
+    cropyear,
+    2010
   ),
   tar_target(
     crop_dir_2010,
     sprintf(
       "data/spatial/dataverse_files_crop_%s/spam%sv2r0_global_prod.geotiff/",
-      2010,
-      2010
+      cropyear,
+      cropyear
     )
   ),
-  # tar_terra_rast(
-  #   crop_2010,
-  #   import_rasts(
-  #     path = crop_dir_2010,
-  #     ext = ".tif"
-  #   )
-  # )
   tar_terra_rast(
-    crop_2010,
+    crop_2010_raw,
     get_crop(
       path = crop_dir_2010,
-      sbst = "_A"
+      sbst = "_A",
+      cropyear
     )
+  ),
+  tar_terra_rast(
+    crop_2010,
+    match_ref(crop_2010_raw, ref)
   )
 )
