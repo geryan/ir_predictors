@@ -7,7 +7,7 @@ bibliography: refs.bib
 
 IR data sources
 
-## Intervention data
+## Interventions
 
 MAP data for 2015 and 2020 via the `malariaAtlas` R package (github version)
 ```
@@ -19,12 +19,34 @@ irpreds::get_intervention(
 malariaAtlas::getRaster()
 ```
 
-## Crop data
+THIS IS NOT RIGHT - USING UPDATE FROM MAP
+
+
+## Crop variables
+
+
+### Area under cropping
+MODIS/Terra+Aqua Land Cover Type Yearly L3 Global 500 m SIN Grid from: 
+[https://lpdaac.usgs.gov/products/mcd12q1v061/]()
+
+Accessed through [https://search.earthdata.nasa.gov/downloads/3964477180]()
+which produced code used in `modis_crop.bash` used for download.
+
+
+### Area under irrigation
+Stefan Siebert, Verena Henrich, Karen Frenken and Jacob Burke (2013). Global Map
+of Irrigation Areas version 5. Rheinische Friedrich-Wilhelms-University, Bonn,
+Germany / Food and Agriculture Organization of the United Nations, Rome, Italy
+
+The map shows the amount of area equipped for irrigation around the year 2005 in
+percentage of the total area on a raster with a resolution of 5 minutes.
+
+[https://www.fao.org/aquastat/en/geospatial-information/global-maps-irrigated-areas/latest-version/]()
+
+
+### Global Spatially-Disaggregated Crop Production Statistics
 Originally from [https://harvestchoice.org/data/]() now housed at
 [https://www.ifpri.org/project/harvestchoice]() with data at:
-
-#### Global Spatially-Disaggregated Crop Production Statistics
-
 Using the `_P_` (production) variables for `_A` (total area) technology layers
 (NB: consider using irrigated + high inputs as tighter proxy for pestecide use?)
 ```
@@ -46,25 +68,32 @@ t: Technologies
 *_TR	rainfed portion of crop (= TA - TI, or TH + TL + TS)
 ```
 
-
-
-
-
-##### 2000
+#### 2000
 International Food Policy Research Institute, 2019, "Global Spatially-
 Disaggregated Crop Production Statistics Data for 2000 Version 3.0.7", 
 [https://doi.org/10.7910/DVN/A50I2T](), Harvard Dataverse, V2
 [@crop_disagg_2000]
 
-##### 2005
+#### 2005
 International Food Policy Research Institute (IFPRI); International Institute 
 for Applied Systems Analysis (IIASA), 2016, "Global Spatially-Disaggregated Crop
 Production Statistics Data for 2005 Version 3.2", 
 [https://doi.org/10.7910/DVN/DHXBJX](), Harvard Dataverse, V9
 [@crop_disagg_2005]
 
-##### 2010
+#### 2010
 International Food Policy Research Institute (IFPRI), 2019, "Global Spatially-
 Disaggregated Crop Production Statistics Data for 2010 Version 2.0", 
 [https://doi.org/10.7910/DVN/PRFF8V](), Harvard Dataverse, V4 
 [@crop_disagg_2010]
+
+
+## Pesticides
+
+Maggi, F., Tang, F.H.M., la Cecilia, D. et al. PEST-CHEMGRIDS, global gridded 
+maps of the top 20 crop-specific pesticide application rates from 2015 to 2025.
+Sci Data 6, 170 (2019). [https://doi.org/10.1038/s41597-019-0169-4]() (*paper*)
+
+Data from figshare: [@pestchemgrids]
+
+

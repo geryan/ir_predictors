@@ -28,14 +28,18 @@ tar_source()
 
 list(
   #### Static time-non-varying stuff
+
+  # reference - itn per capita mean
   tar_terra_rast(
-    itn_2018,
-    rast("data/spatial/ITN_2018_use_mean.tif")
+    itn_2022,
+    rast("data/spatial/nets_per_capita/ITN_2022_percapita_nets_mean.tif")
   ),
   tar_terra_rast(
     ref,
-    create_reference(itn_2018, "output/spatial/reference.tif")
+    create_reference(itn_2022, "output/spatial/reference.tif")
   ),
+
+  ## crop data
   tar_target(
     cropyear,
     2010
@@ -64,5 +68,34 @@ list(
       missing_val = 0,
       filename = "output/spatial/crop_2010.tif"
     )
+  ),
+  tar_terra_rast(
+    crop_2010_std,
+    std_rast(
+      x = crop_2010,
+      filename = "output/spatial/crop_2010_std.tif"
+    )
+  ),
+  tar_terra_rast(
+    crop_2010_scale,
+    crop_2010 |>
+      scale() |>
+      writereadrast(
+        x = _,
+        filename = "output/spatial/crop_2010_scale.tif",
+        overwrite = TRUE
+      )
+  ),
+
+  # irrigation data
+  tar_terra_rast(
+    irrigation_2005,
+    rast("data/spatial/irrigation_2005.asc") |>
+      match_ref(ref = ref) |>
+      writereadrast(
+        x = _,
+        filename = "output/spatial/irrigation_2005.tif",
+        overwrite = TRUE
+      )
   )
 )

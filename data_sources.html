@@ -83,8 +83,8 @@ div.csl-indent {
 
 
 <p>IR data sources</p>
-<section id="intervention-data" class="level2">
-<h2 class="anchored" data-anchor-id="intervention-data">Intervention data</h2>
+<section id="interventions" class="level2">
+<h2 class="anchored" data-anchor-id="interventions">Interventions</h2>
 <p>MAP data for 2015 and 2020 via the <code>malariaAtlas</code> R package (github version)</p>
 <pre><code>irpreds::get_intervention(
   intervention = c("itn", "irs"),
@@ -92,13 +92,24 @@ div.csl-indent {
 )
 # via
 malariaAtlas::getRaster()</code></pre>
+<p>THIS IS NOT RIGHT - USING UPDATE FROM MAP</p>
 </section>
-<section id="crop-data" class="level2">
-<h2 class="anchored" data-anchor-id="crop-data">Crop data</h2>
-<p>Originally from <a href="">https://harvestchoice.org/data/</a> now housed at <a href="">https://www.ifpri.org/project/harvestchoice</a> with data at:</p>
-<section id="global-spatially-disaggregated-crop-production-statistics" class="level4">
-<h4 class="anchored" data-anchor-id="global-spatially-disaggregated-crop-production-statistics">Global Spatially-Disaggregated Crop Production Statistics</h4>
-<p>Using the <code>_P_</code> (production) variables for <code>_A</code> (total area) technology layers (NB: consider using irrigated + high inputs as tighter proxy for pestecide use?)</p>
+<section id="crop-variables" class="level2">
+<h2 class="anchored" data-anchor-id="crop-variables">Crop variables</h2>
+<section id="area-under-cropping" class="level3">
+<h3 class="anchored" data-anchor-id="area-under-cropping">Area under cropping</h3>
+<p>MODIS/Terra+Aqua Land Cover Type Yearly L3 Global 500 m SIN Grid from: <a href="">https://lpdaac.usgs.gov/products/mcd12q1v061/</a></p>
+<p>Accessed through <a href="">https://search.earthdata.nasa.gov/downloads/3964477180</a> which produced code used in <code>modis_crop.bash</code> used for download.</p>
+</section>
+<section id="area-under-irrigation" class="level3">
+<h3 class="anchored" data-anchor-id="area-under-irrigation">Area under irrigation</h3>
+<p>Stefan Siebert, Verena Henrich, Karen Frenken and Jacob Burke (2013). Global Map of Irrigation Areas version 5. Rheinische Friedrich-Wilhelms-University, Bonn, Germany / Food and Agriculture Organization of the United Nations, Rome, Italy</p>
+<p>The map shows the amount of area equipped for irrigation around the year 2005 in percentage of the total area on a raster with a resolution of 5 minutes.</p>
+<p><a href="">https://www.fao.org/aquastat/en/geospatial-information/global-maps-irrigated-areas/latest-version/</a></p>
+</section>
+<section id="global-spatially-disaggregated-crop-production-statistics" class="level3">
+<h3 class="anchored" data-anchor-id="global-spatially-disaggregated-crop-production-statistics">Global Spatially-Disaggregated Crop Production Statistics</h3>
+<p>Originally from <a href="">https://harvestchoice.org/data/</a> now housed at <a href="">https://www.ifpri.org/project/harvestchoice</a> with data at: Using the <code>_P_</code> (production) variables for <code>_A</code> (total area) technology layers (NB: consider using irrigated + high inputs as tighter proxy for pestecide use?)</p>
 <pre><code>v: Variables
 **************
 *_A_*       physical area
@@ -115,20 +126,25 @@ t: Technologies
 *_TL    rainfed low inputs portion of crop
 *_TS    rainfed subsistence portion of crop
 *_TR    rainfed portion of crop (= TA - TI, or TH + TL + TS)</code></pre>
-<section id="section" class="level5">
-<h5 class="anchored" data-anchor-id="section">2000</h5>
+<section id="section" class="level4">
+<h4 class="anchored" data-anchor-id="section">2000</h4>
 <p>International Food Policy Research Institute, 2019, “Global Spatially- Disaggregated Crop Production Statistics Data for 2000 Version 3.0.7”, <a href="">https://doi.org/10.7910/DVN/A50I2T</a>, Harvard Dataverse, V2 <span class="citation" data-cites="crop_disagg_2000">(<a href="#ref-crop_disagg_2000" role="doc-biblioref">Institute 2019</a>)</span></p>
 </section>
-<section id="section-1" class="level5">
-<h5 class="anchored" data-anchor-id="section-1">2005</h5>
+<section id="section-1" class="level4">
+<h4 class="anchored" data-anchor-id="section-1">2005</h4>
 <p>International Food Policy Research Institute (IFPRI); International Institute for Applied Systems Analysis (IIASA), 2016, “Global Spatially-Disaggregated Crop Production Statistics Data for 2005 Version 3.2”, <a href="">https://doi.org/10.7910/DVN/DHXBJX</a>, Harvard Dataverse, V9 <span class="citation" data-cites="crop_disagg_2005">(<a href="#ref-crop_disagg_2005" role="doc-biblioref">(IFPRI) and Applied Systems Analysis (IIASA) 2016</a>)</span></p>
 </section>
-<section id="section-2" class="level5">
-<h5 class="anchored" data-anchor-id="section-2">2010</h5>
+<section id="section-2" class="level4">
+<h4 class="anchored" data-anchor-id="section-2">2010</h4>
 <p>International Food Policy Research Institute (IFPRI), 2019, “Global Spatially- Disaggregated Crop Production Statistics Data for 2010 Version 2.0”, <a href="">https://doi.org/10.7910/DVN/PRFF8V</a>, Harvard Dataverse, V4 <span class="citation" data-cites="crop_disagg_2010">(<a href="#ref-crop_disagg_2010" role="doc-biblioref">(IFPRI) 2019</a>)</span></p>
+</section>
+</section>
+</section>
+<section id="pesticides" class="level2">
+<h2 class="anchored" data-anchor-id="pesticides">Pesticides</h2>
+<p>Maggi, F., Tang, F.H.M., la Cecilia, D. et al.&nbsp;PEST-CHEMGRIDS, global gridded maps of the top 20 crop-specific pesticide application rates from 2015 to 2025. Sci Data 6, 170 (2019). <a href="">https://doi.org/10.1038/s41597-019-0169-4</a> (<em>paper</em>)</p>
+<p>Data from figshare: <span class="citation" data-cites="pestchemgrids">(<a href="#ref-pestchemgrids" role="doc-biblioref">maggi et al. 2019</a>)</span></p>
 
-</section>
-</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
@@ -140,6 +156,9 @@ t: Technologies
 </div>
 <div id="ref-crop_disagg_2000" class="csl-entry" role="listitem">
 Institute, International Food Policy Research. 2019. <span>“<span class="nocase">Global Spatially-Disaggregated Crop Production Statistics Data for 2000 Version 3.0.7</span>.”</span> Harvard Dataverse. <a href="https://doi.org/10.7910/DVN/A50I2T">https://doi.org/10.7910/DVN/A50I2T</a>.
+</div>
+<div id="ref-pestchemgrids" class="csl-entry" role="listitem">
+maggi, federico, Fiona HM Tang, Daniele la Cecilia, and Alex McBratney. 2019. <span>“<span class="nocase">PEST-CHEMGRIDS_v1.01</span>,”</span> August. <a href="https://doi.org/10.6084/m9.figshare.7764014.v5">https://doi.org/10.6084/m9.figshare.7764014.v5</a>.
 </div>
 </div></section></div></main>
 <!-- /main column -->
