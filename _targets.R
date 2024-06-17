@@ -97,5 +97,25 @@ list(
         filename = "output/spatial/irrigation_2005.tif",
         overwrite = TRUE
       )
+  ),
+
+  # pesticide data
+  tar_terra_rast(
+    pesticides_crop,
+    import_rasts("data/spatial/pest_chemgrids/PEST-CHEMGRIDS_v1_01_CROPS/GEOTIFF/", ext = "tif") |>
+      match_ref(ref = ref) |>
+      writereadrast(
+        x = _,
+        filename = "output/spatial/pest_crop.tif",
+        overwrite = TRUE
+      )
+  ),
+  tar_terra_rast(
+    pesticides_crop_scale,
+    pesticides_crop |>
+      std_rast(
+        x = _,
+        filename = "output/spatial/pest_crop_scale.tif"
+      )
   )
 )
