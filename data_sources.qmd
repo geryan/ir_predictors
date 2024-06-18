@@ -96,4 +96,7 @@ Sci Data 6, 170 (2019). [https://doi.org/10.1038/s41597-019-0169-4]() (*paper*)
 
 Data from figshare: [@pestchemgrids]
 
+Using the Application rate data. These appear to be exponents of application
+rates (i.e., some values are negaitve)
+
 
