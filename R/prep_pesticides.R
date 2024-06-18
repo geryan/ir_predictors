@@ -39,7 +39,7 @@ prep_pesticides <- function(ref){
       data = f,
       .by = c(pesticide, year, hl)
     ) |>
-    filter(pesticide %in% c("Clothianidin", "Carbaryl", "Dimethoate")) |>
+    filter(pesticide %in% c("Carbaryl", "Dimethoate")) |>
     mutate(
       filename = sprintf(
         "output/spatial/pesticides/%s_%s_%s.tif",
@@ -47,22 +47,35 @@ prep_pesticides <- function(ref){
         year,
         hl
       ),
-      rast = map2(
-        .x = data,
-        .y = filename,
-        .f = function(x, y, ref){
-          x |>
+      lyrname = sprintf(
+        "%s_%s_%s",
+        pesticide,
+        year,
+        hl
+      ),
+      rast = pmap(
+        .l = list(
+          data = data,
+          filename = filename,
+          lyrname = lyrname
+
+        ),
+        .f = function(data, filename, lyrname, ref){
+          data |>
             pull(f) |>
             rast() |>
             process_pesticide_rasts(
               x = _,
               ref = ref,
-              filename = y
+              filename = filename,
+              lyrname = lyrname
             )
         },
         ref = ref
       )
     )
+
+
 
 
 
