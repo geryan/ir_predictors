@@ -1,4 +1,4 @@
-process_pesticide_rasts <- function(x, ref, filename){
+process_pesticide_rasts <- function(x, ref, filename, lyrname){
 
   v <- values(x)
 
@@ -23,7 +23,8 @@ process_pesticide_rasts <- function(x, ref, filename){
     ) |>
     writereadrast(
     filename = filename,
-    overwrite = TRUE
+    overwrite = TRUE,
+    layernames = lyrname
   )
 
 }

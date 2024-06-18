@@ -120,6 +120,10 @@ list(
         x = _,
         filename = "output/spatial/pest_crop_scale.tif"
       )
+  ),
+  tar_target(
+    pesticide_tbls,
+    prep_pesticides(ref)
   )
 
 )

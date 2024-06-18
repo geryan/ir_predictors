@@ -39,7 +39,8 @@ prep_pesticides <- function(ref){
       data = f,
       .by = c(pesticide, year, hl)
     ) |>
-    filter(pesticide %in% c("Carbaryl", "Dimethoate")) |>
+    # this line only for testing
+    # filter(pesticide %in% c("Carbaryl", "Dimethoate")) |>
     mutate(
       filename = sprintf(
         "output/spatial/pesticides/%s_%s_%s.tif",
@@ -53,7 +54,7 @@ prep_pesticides <- function(ref){
         year,
         hl
       ),
-      rast = pmap(
+      r = pmap(
         .l = list(
           data = data,
           filename = filename,
@@ -75,8 +76,137 @@ prep_pesticides <- function(ref){
       )
     )
 
+  mids <- all_rasts |>
+    group_by(pesticide, year) |>
+    summarise(
+      r = do.call(c, r) |>
+        list(),
+      .groups = "drop"
+    ) |>
+    mutate(
+      r = pmap(
+        .l = list(
+          pesticide = pesticide,
+          year = year,
+          r = r
+        ),
+        .f = function(pesticide, year, r){
+          r |>
+            mean() |>
+            writereadrast(
+              filename = sprintf(
+                "output/spatial/pesticides/%s_%s_M.tif",
+                pesticide,
+                year
+              ),
+              overwrite = TRUE,
+              layernames = sprintf(
+                "%s_%s_M",
+                pesticide,
+                year
+              )
+            )
 
+        }
+      )
+    )
 
+  allr <- bind_rows(
+    mids |>
+      mutate(hl = "M") |>
+      select(pesticide, year, hl, r),
+    all_rasts |>
+      select(pesticide, year, hl, r)
+  ) |>
+    arrange(pesticide, year, hl)
 
+  # by year (all pesticides together)
+  p_by_year <- allr |>
+    # rename layer to pesticide
+    mutate(
+      r = map2(
+        .x = pesticide,
+        .y = r,
+        .f = function(x, y){
+          z <- y
+          names(z) <- x
+          z
+        }
+      )
+    ) |>
+    group_by(year, hl) |>
+    summarise(
+      r = do.call(c, r) |>
+        list(),
+      .groups = "drop"
+    ) |>
+    mutate(
+      r = pmap(
+        .l = list(
+          year = year,
+          hl = hl,
+          r = r
+        ),
+        .f = function(year, hl, r){
+          r |>
+            writereadrast(
+              filename = sprintf(
+                "output/spatial/pesticides/year/%s_%s.tif",
+                year,
+                hl
+              ),
+              overwrite = TRUE
+            )
 
+        }
+      )
+    )
+
+  # by pesticide (all years together)
+  p_by_pesticide <- allr |>
+    # rename layer to year
+    mutate(
+      r = map2(
+        .x = year,
+        .y = r,
+        .f = function(x, y){
+          z <- y
+          names(z) <- x
+          z
+        }
+      )
+    ) |>
+    group_by(pesticide, hl) |>
+    summarise(
+      r = do.call(c, r) |>
+        list(),
+      .groups = "drop"
+    ) |>
+    mutate(
+      r = pmap(
+        .l = list(
+          pesticide = pesticide,
+          hl = hl,
+          r = r
+        ),
+        .f = function(pesticide, hl, r){
+          r |>
+            writereadrast(
+              filename = sprintf(
+                "output/spatial/pesticides/pesticide/%s_%s.tif",
+                pesticide,
+                hl
+              ),
+              overwrite = TRUE
+            )
+        }
+      )
+    )
+
+  list(
+    p_by_pesticide |>
+      select(-r),
+    p_by_year |>
+      select(-r)
+  )
 }
