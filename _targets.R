@@ -4,9 +4,9 @@ library(geotargets)
 
 # install.packages("geotargets", repos = "https://njtierney.r-universe.dev")
 # install.packages( "sdmtools", repos = "https://idem-lab.r-universe.dev")
-# remotes::install_github("geryan/irpreds")
-# remotes::install_github("malaria-atlas-project/malariaAtlas") # CRAN version
-# is wildly outdated
+# # remotes::install_github("geryan/irpreds")
+# remotes::install_github("malaria-atlas-project/malariaAtlas") #
+# CRAN version of `malariaAtlas` is wildly outdated
 # install.packages("tidyterra")
 
 
@@ -17,9 +17,12 @@ tar_option_set(
     "terra",
     "malariaAtlas",
     "sdmtools",
-    "irpreds",
+    #"irpreds",
     "geotargets",
-    "tidyterra"
+    "tidyterra",
+    "tidyr",
+    "purrr",
+    "stringr"
   ),
    format = "qs",
 )
@@ -118,4 +121,5 @@ list(
         filename = "output/spatial/pest_crop_scale.tif"
       )
   )
+
 )
