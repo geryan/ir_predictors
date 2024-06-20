@@ -217,9 +217,11 @@ list(
         )
       ) +
       scale_y_log10()
+  ),
+  tar_target(
+    insecticides,
+    process_insecticides(insecticide_lyr_tbl)
   )
-
-
 )
 
 
