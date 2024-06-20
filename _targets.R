@@ -151,6 +151,13 @@ list(
         insecticide = pesticide,
         class = insecticide_class
       )
+  ),
+  tar_target(
+    insecticide_lyr_tbl,
+    ilt(
+      insecticide_tbl,
+      all_pesticide_layers
+    )
   )
 
 
