@@ -17,12 +17,12 @@ tar_option_set(
     "terra",
     "malariaAtlas",
     "sdmtools",
-    #"irpreds",
     "geotargets",
     "tidyterra",
     "tidyr",
     "purrr",
-    "stringr"
+    "stringr",
+    "readr"
   ),
    format = "qs",
 )
@@ -124,6 +124,36 @@ list(
   tar_target(
     pesticide_tbls,
     prep_pesticides(ref)
+  ),
+  tar_target(
+    all_pesticide_layers,
+    expand_grid(
+      pesticide_tbls[[1]],
+      year = pesticide_tbls[[2]]$year |>
+        unique()
+    )
+  ),
+  tar_target(
+    pesticide_classes,
+    read_csv(
+      file = "data/pesticide_classification.csv",
+      col_names = c("pesticide", "type", "insecticide_class", "comment", "X"),
+      col_select = c(pesticide, type, insecticide_class),
+      skip = 1
+    )
+  ),
+  tar_target(
+    insecticide_tbl,
+    pesticide_classes |>
+      filter(type == "insecticide") |>
+      select(- type) |>
+      rename(
+        insecticide = pesticide,
+        class = insecticide_class
+      )
   )
 
+
 )
+
+
