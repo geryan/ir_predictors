@@ -158,6 +158,65 @@ list(
       insecticide_tbl,
       all_pesticide_layers
     )
+  ),
+  tar_target(
+    insecticide_totals,
+    insecticide_lyr_tbl |>
+      mutate(
+        use = map(
+          .x = fn,
+          .f = function(x){
+
+            rast(x) |>
+              values() |>
+              sum(na.rm = TRUE)
+          }
+        ) |>
+          unlist(),
+        year = as.integer(year)
+      )
+  ),
+  tar_target(
+    insecticide_use_plot,
+    ggplot(insecticide_totals) +
+      geom_line(
+        aes(
+          x = year,
+          y = use,
+          colour = insecticide,
+          linetype = hl
+        )
+      ) +
+      facet_wrap(~class, scales = "free_y")
+  ),
+  tar_target(
+    insecticide_use_plot_log10,
+    ggplot(insecticide_totals) +
+      geom_line(
+        aes(
+          x = year,
+          y = use,
+          colour = insecticide,
+          linetype = hl
+        )
+      ) +
+      facet_wrap(~class, scales = "free_y") +
+      scale_y_log10()
+  ),
+  tar_target(
+    carbamate_use_plot,
+    ggplot(
+      insecticide_totals |>
+        filter(class == "carbamate")
+    ) +
+      geom_line(
+        aes(
+          x = year,
+          y = use,
+          linetype = hl
+        )
+      ) +
+      scale_y_log10()
   )
 
 
